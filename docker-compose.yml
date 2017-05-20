@@ -25,7 +25,7 @@ services:
 
   celery:
     build: .
-    command: celery worker -l info -A casio.blueprints.calculate.tasks
+    command: celery worker -l info -A casio.tasks
     env_file:
       - '.env'
     volumes:

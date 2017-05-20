@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Calc page</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+		<div>
+            <div id="respond">
+              <form action="." method="POST" id="calculationform">
+                {% if error %}
+                    <p>{{ error }}</p>
+                {% endif %}
+                <label for="calc" class="required">Enter calc:</label>
+                <input type="text" name="name" id="calc" value="" required="required" style='width:28em'>
+                <input name="submit" type="submit" value="Submit comment" />
+              </form>
+            </div>
+        </div>
+    </body>
+</html>

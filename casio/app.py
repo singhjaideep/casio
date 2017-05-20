@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, flash,redirect,request,url_for,render_template
 from celery import Celery
 from casio.extensions import mail, csrf
 
 CELERY_TASK_LIST = [
-    'casio.blueprints.calculate.tasks',
+    'casio.tasks',
 ]
 
 def create_app(settings_override=None):
@@ -22,14 +22,13 @@ def create_app(settings_override=None):
         
     extensions(app)
 
-    @app.route('/')
+    @app.route('/', methods=["GET", "POST"])
     def index():
-        """
-        Render a Hello World response.
-
-        :return: Flask response
-        """
-        return 'Hello World!'
+        '''if request.method == "POST":
+            deliver_calculation.delay(request.form.get('calc'))
+            flash('Thanks, expect a result shortly.', 'success')
+            return redirect(url_for('calculate.index'))'''
+        return render_template("main_page.html")
 
     return app
 
