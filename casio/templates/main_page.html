@@ -6,12 +6,15 @@
     <body>
 		<div>
             <div id="respond">
+              {% if calc %}
+                <h3>Result is : {{ calc }}</h3>
+              {% endif %}
               <form action="." method="POST" id="calculationform">
                 {% if error %}
                     <p>{{ error }}</p>
                 {% endif %}
                 <label for="calc" class="required">Enter calc:</label>
-                <input type="text" name="name" id="calc" value="" required="required" style='width:28em'>
+                <input type="text" name="calc" id="calc" value="" required="required" style='width:28em'>
                 <input name="submit" type="submit" value="Submit comment" />
               </form>
             </div>

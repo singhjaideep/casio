@@ -7,8 +7,5 @@ def deliver_calculation(calc):
     Offload calculation task to separate process
     """
     result = None
-    result = calculatethis(calc)
-    return result
-
-def calculatethis(calc):
-    return None
+    result = eval(calc)
+    return str(result)

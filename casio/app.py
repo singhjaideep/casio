@@ -1,6 +1,6 @@
 from flask import Flask, flash,redirect,request,url_for,render_template
 from celery import Celery
-from casio.extensions import mail, csrf
+from casio.extensions import mail#, csrf
 
 CELERY_TASK_LIST = [
     'casio.tasks',
@@ -24,11 +24,14 @@ def create_app(settings_override=None):
 
     @app.route('/', methods=["GET", "POST"])
     def index():
-        '''if request.method == "POST":
-            deliver_calculation.delay(request.form.get('calc'))
+        calc=error=None
+        if request.method == "POST":
+            from casio.tasks import deliver_calculation #prevent circular import?
+            result = deliver_calculation.delay(request.form.get('calc'))
             flash('Thanks, expect a result shortly.', 'success')
-            return redirect(url_for('calculate.index'))'''
-        return render_template("main_page.html")
+            calc=result.wait()
+            #return redirect(url_for('calculate.index'))
+        return render_template("main_page.html",calc=calc,error=error)
 
     return app
 
@@ -40,7 +43,7 @@ def extensions(app):
     :return: None
     """
     mail.init_app(app)
-    csrf.init_app(app)
+    #csrf.init_app(app)
 
     return None
 
